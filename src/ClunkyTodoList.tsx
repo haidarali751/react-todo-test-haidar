@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 
 export function ClunkyTodoList() {
   const [tasks, setTasks] = useState([
@@ -11,7 +11,7 @@ export function ClunkyTodoList() {
   const [tasksToRender, setTasksToRender] = useState<any[]>([]);
   const [multiWordOnly, setMultiWordOnly] = useState(false);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setNewTask(event.target.value);
   };
 
@@ -25,26 +25,15 @@ export function ClunkyTodoList() {
 
   const handleAddTask = () => {
     if (newTask.trim() !== "") {
-      const tempTasks = [...tasks];
-      tempTasks.push({ id: Date.now(), text: newTask, completed: false });
-      setTasks(tempTasks);
+      setTasks([{ id: Date.now(), text: newTask, completed: false }, ...tasks]);
       setNewTask("");
     }
   };
 
-  const handleToggleComplete = (id) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === id) {
-        let tempTask = {
-          id: task.id,
-          text: task.text,
-          completed: task.completed,
-        };
-        tempTask.completed = !tempTask.completed;
-        return tempTask;
-      }
-      return task;
-    });
+  const handleToggleComplete = (id: number) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    );
     setTasks(updatedTasks);
   };
 
