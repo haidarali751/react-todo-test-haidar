@@ -13,18 +13,20 @@ interface TaskItemProps {
 export function TaskItem({ task, onToggle, onRemove }: TaskItemProps) {
   return (
     <li>
-      <input
-        type="checkbox"
-        checked={task.completed}
-        onChange={() => onToggle(task.id)}
-      />
-      <span
-        style={{
-          textDecoration: task.completed ? "line-through" : "none",
-        }}
-      >
-        {task.text}
-      </span>
+      <div>
+        <input
+          type="checkbox"
+          checked={task.completed}
+          onChange={() => onToggle(task.id)}
+        />
+        <span
+          style={{
+            textDecoration: task.completed ? "line-through" : "none",
+          }}
+        >
+          {task.text}
+        </span>
+      </div>
       <a
         href="#"
         onClick={(e) => {
@@ -32,7 +34,7 @@ export function TaskItem({ task, onToggle, onRemove }: TaskItemProps) {
           onRemove(task.id);
         }}
       >
-        [x]
+        X
       </a>
     </li>
   );

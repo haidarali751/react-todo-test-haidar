@@ -60,7 +60,7 @@ export function ClunkyTodoList() {
   }, [tasks]);
 
   return (
-    <div>
+    <div className="todo-container">
       <h1>To-Do List</h1>
       <h2>Items: {totalCount}</h2>
 

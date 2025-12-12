@@ -25,9 +25,75 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  justify-content: center;
+  align-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.todo-container {
+  text-align: center;
+  padding: 2rem 3rem;
+  min-width: 350px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.todo-container div {
+  margin: 0.75rem 0;
+}
+
+.todo-container button {
+  margin: 0.25rem;
+}
+
+.todo-container input[type="text"] {
+  padding: 0.6em 1em;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #1a1a1a;
+  color: inherit;
+  margin-right: 0.5rem;
+}
+
+.todo-container ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  margin-top: 1.5rem;
+}
+
+.todo-container li {
+  padding: 1rem;
+  border-bottom: 1px solid #333;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.todo-container li:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.todo-container li:last-child {
+  border-bottom: none;
+}
+
+.todo-container li input[type="checkbox"] {
+  margin-right: 0.75rem;
+  transform: scale(1.2);
 }
 
 h1 {
@@ -57,12 +123,26 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: #f0f0f0;
   }
   a:hover {
     color: #747bff;
   }
   button {
     background-color: #f9f9f9;
+  }
+  .todo-container {
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  .todo-container input[type="text"] {
+    background-color: #f9f9f9;
+    border-color: #ccc;
+  }
+  .todo-container li {
+    border-bottom-color: #eee;
+  }
+  .todo-container li:hover {
+    background-color: rgba(0, 0, 0, 0.03);
   }
 }
