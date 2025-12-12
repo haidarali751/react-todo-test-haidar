@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export function ClunkyTodoList() {
   const [tasks, setTasks] = useState([
@@ -25,7 +25,11 @@ export function ClunkyTodoList() {
   const handleToggleComplete = (id) => {
     const updatedTasks = tasks.map((task) => {
       if (task.id === id) {
-        let tempTask = { id: task.id, text: task.text, completed: task.completed };
+        let tempTask = {
+          id: task.id,
+          text: task.text,
+          completed: task.completed,
+        };
         tempTask.completed = !tempTask.completed;
         return tempTask;
       }
@@ -34,7 +38,7 @@ export function ClunkyTodoList() {
     setTasks(updatedTasks);
   };
 
-  const [tasksToRender, setTasksToRender] = useState<any[]>([])
+  const [tasksToRender, setTasksToRender] = useState<any[]>([]);
   useEffect(() => {
     let filteredTasks = tasks;
     if (filter === "completed") {
@@ -43,11 +47,11 @@ export function ClunkyTodoList() {
       filteredTasks = tasks.filter((task) => !task.completed);
     }
     setTasksToRender(filteredTasks);
-  }, [tasks]);
+  }, [tasks, filter]);
 
   const totalCount = useMemo(() => {
     return tasks.length;
-  }, []);
+  }, [tasks]);
 
   return (
     <div>
@@ -65,9 +69,10 @@ export function ClunkyTodoList() {
         <button onClick={() => setFilter("active")}>Active</button>
         <button onClick={() => setFilter("completed")}>Completed</button>
       </div>
+
       <ul>
-        {tasksToRender.map((task, index) => (
-          <li key={index}>
+        {tasksToRender.map((task) => (
+          <li key={task.id}>
             <input
               type="checkbox"
               checked={task.completed}
