@@ -13,6 +13,10 @@ export function ClunkyTodoList() {
     setNewTask(event.target.value);
   };
 
+  const handleRemoveTask = (id: number) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
   const handleAddTask = () => {
     if (newTask.trim() !== "") {
       const tempTasks = [...tasks];
@@ -85,6 +89,15 @@ export function ClunkyTodoList() {
             >
               {task.text}
             </span>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                handleRemoveTask(task.id);
+              }}
+            >
+              [x]
+            </a>
           </li>
         ))}
       </ul>
