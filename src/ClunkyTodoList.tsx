@@ -1,4 +1,5 @@
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
+import { TaskItem } from "./TaskItem";
 
 export function ClunkyTodoList() {
   const [tasks, setTasks] = useState([
@@ -8,7 +9,6 @@ export function ClunkyTodoList() {
   ]);
   const [newTask, setNewTask] = useState("");
   const [filter, setFilter] = useState("all");
-  const [tasksToRender, setTasksToRender] = useState<any[]>([]);
   const [multiWordOnly, setMultiWordOnly] = useState(false);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -37,22 +37,22 @@ export function ClunkyTodoList() {
     setTasks(updatedTasks);
   };
 
-  useEffect(() => {
-    let filteredTasks = tasks;
+  const filteredTasks = useMemo(() => {
+    let result = tasks;
 
     if (filter === "completed") {
-      filteredTasks = filteredTasks.filter((task) => task.completed);
+      result = result.filter((task) => task.completed);
     } else if (filter === "active") {
-      filteredTasks = filteredTasks.filter((task) => !task.completed);
+      result = result.filter((task) => !task.completed);
     }
 
     if (multiWordOnly) {
-      filteredTasks = filteredTasks.filter(
+      result = result.filter(
         (task) => task.text.trim().split(/\s+/).length >= 2
       );
     }
 
-    setTasksToRender(filteredTasks);
+    return result;
   }, [tasks, filter, multiWordOnly]);
 
   const totalCount = useMemo(() => {
@@ -91,30 +91,13 @@ export function ClunkyTodoList() {
       <button onClick={handleRemoveCompleted}>Remove Completed</button>
 
       <ul>
-        {tasksToRender.map((task) => (
-          <li key={task.id}>
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => handleToggleComplete(task.id)}
-            />
-            <span
-              style={{
-                textDecoration: task.completed ? "line-through" : "none",
-              }}
-            >
-              {task.text}
-            </span>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                handleRemoveTask(task.id);
-              }}
-            >
-              [x]
-            </a>
-          </li>
+        {filteredTasks.map((task) => (
+          <TaskItem
+            key={task.id}
+            task={task}
+            onToggle={handleToggleComplete}
+            onRemove={handleRemoveTask}
+          />
         ))}
       </ul>
     </div>
